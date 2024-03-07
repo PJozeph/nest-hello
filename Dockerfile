@@ -1,13 +1,8 @@
-FROM node:18
-USER root
+FROM node:18.19.1-alpine as build
 WORKDIR /app
+COPY ./package*.json ./
 
-COPY package*.json ./
+RUN npm ci
 
-RUN npm install
-
-COPY . .
-
+COPY ./ ./
 RUN npm run build
-
-CMD [ "npm", "run", "start" ]
